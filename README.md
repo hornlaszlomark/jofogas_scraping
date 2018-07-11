@@ -21,5 +21,6 @@ Selenium is slower compared to the ones I used for this project. I'm going repli
 TODO:
 - [ ] scraping the amount of pictures are uploaded
 - [ ] scraping the real estate agency's name and contact
+- [ ] scraping the contents of the real estate pages (category, type of heating, floor, view, etc.)
 - [ ] async/await introduction for parallel processing (reducing wait time)
 - [ ] production ready implementation
