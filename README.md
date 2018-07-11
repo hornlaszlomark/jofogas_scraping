@@ -19,6 +19,7 @@ As part of my application, I'd like to present some of my skills to the recruite
 Selenium is slower compared to the ones I used for this project. I'm going replicate the whole thing in Scrapy later.
 
 TODO:
+- [ ] adding user-agent
 - [ ] scraping the amount of pictures are uploaded
 - [ ] scraping the real estate agency's name and contact
 - [ ] scraping the contents of the real estate pages (category, type of heating, floor, view, etc.)
