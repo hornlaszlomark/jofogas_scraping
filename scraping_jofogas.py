@@ -1,33 +1,21 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Jul  9 22:36:49 2018
-
-@author: Laci
-"""
-
 from bs4 import BeautifulSoup
 import pandas as pd
 import re    
 import requests
-import unidecode
-
-
-#
-#base = "https://www.jofogas.hu/oldalterkep"
-#htmlfile = urllib.request.urlopen(base)
-#soup = BeautifulSoup(htmlfile, 'lxml')
-#
-
+# import unidecode
 
 """
+# jofogas.hu sitemap
 url = 'https://www.jofogas.hu/oldalterkep'
 r = requests.get(url)
 data = r.content
 soup = BeautifulSoup(data,'lxml')
 
+
 try1 = soup.find('a', class_='region-link')
 try2 = soup.select('a.region-link')
 
+#initiate an empty list for the regional categories
 counties = []
 
 for y in try2:
@@ -36,7 +24,7 @@ for y in try2:
 # lowercase of 'counties' list items to manipulate target scraping links
 counties_link = []
 for county in counties:
-    counties_link.append(unidecode.unidecode(county).lower())
+    counties_link.append(unidecode.unidecode(county).lower()) 
  """
 
 
@@ -53,8 +41,8 @@ subject = []
 price_full = []
 photo = []
 
-
-r_last_page = requests.get('https://ingatlan.jofogas.hu/budapest/ingatlan?o=1&st=s') # first page to get the last page's number
+# first page to get the last page's number
+r_last_page = requests.get('https://ingatlan.jofogas.hu/budapest/ingatlan?o=1&st=s') 
 last_page_data = r_last_page.content
 soup_last_page = BeautifulSoup(last_page_data, 'lxml')
 
