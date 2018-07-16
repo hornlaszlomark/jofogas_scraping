@@ -10,14 +10,14 @@ import pandas as pd
 import re    
 import requests
 import unidecode
-#
+
+
 #
 #base = "https://www.jofogas.hu/oldalterkep"
 #htmlfile = urllib.request.urlopen(base)
 #soup = BeautifulSoup(htmlfile, 'lxml')
 #
-#
-#<a class="region-link" href="https://www.jofogas.hu/budapest">Budapest</a>
+
 
 """
 url = 'https://www.jofogas.hu/oldalterkep'
@@ -33,23 +33,18 @@ counties = []
 for y in try2:
     counties.append(y.find(text=True))
 
+# lowercase of 'counties' list items to manipulate target scraping links
 counties_link = []
 for county in counties:
     counties_link.append(unidecode.unidecode(county).lower())
-    """
-#last = soup2.select('a.ad-list-pager-item.ad-list-pager-item-last.active-item.js_hist_li.js_hist')
-#for i in last:
-#    print(i.get('href'))
+ """
 
-# ============================================================================
-#TODO: - az utolsó oldal számához legyen kötve a range() az oldalak scrape-elésénél
-# ============================================================================
-    
+
+# number of links to scrape based on the last page's number
 last_page_num = 'a.ad-list-pager-item.ad-list-pager-item-last.active-item.js_hist_li.js_hist'
-    
 link_start = 'https://ingatlan.jofogas.hu/budapest/ingatlan?o={}&st=s'
 
-
+# target lists that'll be saved (to Excel, SQL, etc)
 rooms = []
 size = []
 price = []
@@ -58,13 +53,16 @@ subject = []
 price_full = []
 photo = []
 
-r_last_page = requests.get('https://ingatlan.jofogas.hu/budapest/ingatlan?o=1&st=s')
+
+r_last_page = requests.get('https://ingatlan.jofogas.hu/budapest/ingatlan?o=1&st=s') # first page to get the last page's number
 last_page_data = r_last_page.content
 soup_last_page = BeautifulSoup(last_page_data, 'lxml')
-last_page_div = 'a.ad-list-pager-item.ad-list-pager-item-last.active-item.js_hist_li.js_hist'
-last_page = soup_last_page.select(last_page_div)[0]
-last_page_link = last_page.get('href')
-last_page_num = re.findall(r'\d+',last_page_link)[0] # scraping digits with regex from the link
+
+
+last_page_div = 'a.ad-list-pager-item.ad-list-pager-item-last.active-item.js_hist_li.js_hist' # css selector of last page
+last_page = soup_last_page.select(last_page_div)[0] # location of last page
+last_page_link = last_page.get('href') # last page's url
+last_page_num = re.findall(r'\d+',last_page_link)[0] # extracting digits with regex from the last page's url
 
 
 for num in range(1,int(last_page_num)+1):
@@ -91,7 +89,7 @@ for num in range(1,int(last_page_num)+1):
         for i in subject_:
             subject.append(i.text)
             
-
+# A few prints to see if every list items are the same lenght
 print('Analytics:')
 print('Rooms: ',len(rooms))
 print('Size: ', len(size))
@@ -114,7 +112,7 @@ df = pd.DataFrame(details)
 
 print('*'*10)
 
-
-writer = pd.ExcelWriter('Budapest2.xlsx')
+# 
+writer = pd.ExcelWriter('Budapest.xlsx')
 df.to_excel(writer, index=False)
 writer.save()
